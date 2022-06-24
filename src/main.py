@@ -14,10 +14,13 @@ parser.add_argument("-t","--Train", help="Show Output")
 parser.add_argument("-v","--Visualize", help="Show Output")
 parser.add_argument("-lm", "--Load_Model", help="Show Output")
 parser.add_argument("-d", "--Display", help="Show Output")
+parser.add_argument("-s", "--Save_Model", help="Show Output")
 args = parser.parse_args()
 
 #TODO: Actually split up the program or present users with options
 def main():
+    viz_history = history.history
+
     if args.Train:
         print('Setting up train and test sets')
         train_images,train_labels,test_images,test_labels = create_train_test()
@@ -27,10 +30,11 @@ def main():
         model = ModelBuilder.create_model()
         model = ModelBuilder.compile_model(model)
         history = ModelBuilder.fit_model(model, train_images, test_images, train_labels)
+        viz_history = history
 
+    if args.Save_Model:
         print('Saving Model')
         ModelBuilder.save_model(model)
-
         ModelBuilder.pickle_history(history)
 
     if args.Load_Model:
@@ -38,7 +42,7 @@ def main():
 
     if args.Display:
         print('Displaying model history')
-        ModelBuilder.visualize_model(history)
+        ModelBuilder.visualize_model(viz_history)
 
 def create_train_test():
     spiders = ["Black Widow", "Blue Tarantula", "Bold Jumper", "Brown Grass Spider", "Brown Recluse Spider",
