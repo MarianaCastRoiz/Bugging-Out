@@ -1,6 +1,5 @@
 #Import TensorFlow Keras Libary to create a CNN (Convolutional Neural Network)
 import tensorflow as tf
-from sklearn.utils import shuffle
 import numpy as np
 from glob import glob
 import matplotlib.pyplot as plt
