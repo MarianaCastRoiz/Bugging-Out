@@ -19,8 +19,6 @@ args = parser.parse_args()
 
 #TODO: Actually split up the program or present users with options
 def main():
-    viz_history = history.history
-
     if args.Train:
         print('Setting up train and test sets')
         train_images,train_labels,test_images,test_labels = create_train_test()
