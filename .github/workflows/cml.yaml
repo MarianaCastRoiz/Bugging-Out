@@ -16,10 +16,8 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cml ci --unshallow
-          dvc init
           dvc remote add --default remote-gd gdrive://1FS1lBYuTH0cps2y7SQKkiDJZ9TIoyWa4
-          dvc remote list #Shows the remote options
-          dvc pull --remote remote-gd
+          dvc pull Data.zip.dvc
       - name: Train model
         env: 
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
