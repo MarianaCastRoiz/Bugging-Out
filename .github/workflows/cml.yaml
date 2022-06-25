@@ -12,7 +12,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up DVC on Google Drive
         env:
-          GDRIVE_CREDENTIALS_DATA: {{ secrets.GDRIVE_CREDENTIALS_DATA }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run: |
           cml ci --unshallow
           dvc remote add --default remote-gd gdrive://1FS1lBYuTH0cps2y7SQKkiDJZ9TIoyWa4
@@ -25,32 +25,3 @@ jobs:
           cml ci --unshallow
           pip install -r requirements.txt  # Install dependencies
           python3 src/main.py --Train true
-      # - name: Create CML report
-      #   env:
-      #     REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     echo "## Metrics" >> report.md
-      #     dvc metrics diff master --show-md >> report.md
-
-      #     # Publish confusion matrix diff
-      #     echo "## Plots" >> report.md
-      #     echo "### Class confusions" >> report.md
-      #     dvc plots diff \
-      #       --target classes.csv \
-      #       --template confusion \
-      #       -x actual \
-      #       -y predicted \
-      #       --show-vega master > vega.json
-      #     vl2png vega.json -s 1.5 > plot.png
-      #     cml publish --md plot.png >> report.md
-
-      #     # Publish regularization function diff
-      #     echo "### Effects of regularization" >> report.md
-      #     dvc plots diff \
-      #       --target estimators.csv \
-      #       -x Regularization \
-      #       --show-vega master > vega.json
-      #     vl2png vega.json -s 1.5 > plot.png
-      #     cml publish --md plot.png >> report.md
-
-      #     cml send-comment report.md
