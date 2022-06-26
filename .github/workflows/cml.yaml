@@ -24,8 +24,3 @@ jobs:
 
           cml publish model-plot.png --md >> report.md
           cml send-comment report.md
-      - name: Display Tensorboard 
-
-
-
-#Next unzip data.zip
