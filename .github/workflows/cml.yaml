@@ -25,7 +25,7 @@ jobs:
           pip install -r requirements.txt
           cml-tensorboard-dev --logdir model_logs --md --name "Go to tensorboard" >> report.md
           cml-send-comment report.md
-          python src/main.py
+          python src/main.py --Train true
 
           cml publish model-plot.png --md >> report.md
           cml send-comment report.md
