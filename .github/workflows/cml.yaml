@@ -17,10 +17,10 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cml ci --unshallow
-          dvc remote add --default remote-gd gdrive://1FS1lBYuTH0cps2y7SQKkiDJZ9TIoyWa4
-          dvc remote modify remote-gd --local gdrive_service_account_json_file_path /dev/null
-          dvc remote modify remote-gd gdrive_use_service_account true
-          dvc pull Data.zip.dvc
+          dvc remote add --default remote-gd gdrive://1FS1lBYuTH0cps2y7SQKkiDJZ9TIoyWa4 -v
+          dvc remote modify remote-gd --local gdrive_service_account_json_file_path /dev/null -v
+          dvc remote modify remote-gd gdrive_use_service_account true -v
+          dvc pull Data.zip.dvc -v
       - name: Train model
         env: 
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
