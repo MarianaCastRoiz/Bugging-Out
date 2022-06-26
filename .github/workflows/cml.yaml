@@ -8,6 +8,11 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+      - uses: iterative/setup-cml@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
       - name: Creating log directory and unzip data
         run: |
           mkdir model_logs
