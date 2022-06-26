@@ -12,7 +12,7 @@ jobs:
       - name: Creating log directory and unzip data
         run: |
           mkdir model_logs
-          unzip Data.zip
+          ls
       - name: Train model
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
