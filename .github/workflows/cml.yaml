@@ -17,7 +17,7 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cml ci --unshallow
-          dvc remote add --default remote-gd gdrive://1YD78Bk47levvbXZVMlwttMBi6jmlHXIm
+          dvc remote add --default remote-gd gdrive://1FS1lBYuTH0cps2y7SQKkiDJZ9TIoyWa4
           dvc remote modify remote-gd --local gdrive_service_account_json_file_path /dev/null
           dvc remote modify remote-gd gdrive_use_service_account true
           dvc pull Data.zip.dvc
