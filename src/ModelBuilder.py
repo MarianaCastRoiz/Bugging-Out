@@ -1,4 +1,5 @@
 #Import TensorFlow Keras Libary to create a CNN (Convolutional Neural Network)
+from gc import callbacks
 import tensorflow as tf
 import numpy as np
 from glob import glob
@@ -29,8 +30,8 @@ class ModelBuilder:
 
         return model
 
-    def fit_model(model, training_set, test_set, training_labels):
-        history = model.fit(training_set, training_labels, batch_size=128, epochs=15, validation_split=0.2)
+    def fit_model(model, training_set, test_set, training_labels, tensorboard_cb):
+        history = model.fit(training_set, training_labels, batch_size=128, epochs=15, validation_split=0.2, callbacks=[tensorboard_cb])
 
         return history
     def pickle_history(history):
@@ -66,4 +67,4 @@ class ModelBuilder:
         plt.xlabel("epochs")
         plt.legend()
 
-        plt.show()
+        plt.savefig('model-plot.png',format='png')
