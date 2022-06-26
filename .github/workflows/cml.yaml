@@ -22,7 +22,7 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TB_CREDENTIALS: ${{ secrets.TB_CREDENTIALS }}
         run: |
-          cml-tensorboard-dev --logdir model_logs --md --name "Go to tensorboard" >> report.md -v
+          cml-tensorboard-dev --logdir model_logs --md --name "Go to tensorboard" >> report.md
           cml-send-comment report.md
           pip install -r requirements.txt
           python src/main.py
