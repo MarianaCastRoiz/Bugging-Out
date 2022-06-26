@@ -5,20 +5,24 @@ jobs:
     runs-on: ubuntu-latest
     container: docker://ghcr.io/iterative/cml:0-dvc2-base1
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/checkout@v2
+
       - uses: iterative/setup-cml@v1
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
       - name: Creating log directory and unzip data
         run: |
           mkdir model_logs
-          ls
+          unzip Data.zip .
       - name: Train model
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TB_CREDENTIALS: ${{ secrets.TB_CREDENTIALS }}
         run: |
-          cml-tensorboard-dev --logdir model_logs --md --name "Go to tensorboard" >> report.md
+          cml-tensorboard-dev --logdir model_logs --md --name "Go to tensorboard" >> report.md -v
           cml-send-comment report.md
           pip install -r requirements.txt
           python src/main.py
