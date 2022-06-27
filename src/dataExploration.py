@@ -3,6 +3,7 @@ import cv2
 import pathlib
 import matplotlib.pyplot as plt
 import numpy as np
+
 def main():
     "Explore the Spider train dataset "
     train_data_dir = './Data/train'

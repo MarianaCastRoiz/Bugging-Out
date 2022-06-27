@@ -8,30 +8,31 @@ from tensorflow.keras.layers import MaxPooling2D
 import time
 import pickle
 
-
-#TODO: Separate the individual params for easier model modification
 class ModelBuilder:
     
-    def create_model():
+    def create_model(num_classes):
         model = tf.keras.Sequential([
-            tf.keras.layers.Conv2D(32, (3,3), activation='relu',input_shape=(224,224,3)),
-            tf.keras.layers.MaxPooling2D(2,2),
-            tf.keras.layers.Conv2D(32,(3,3), activation='relu'),
-            tf.keras.layers.MaxPooling2D(2,2),
+            tf.keras.layers.Rescaling(1./255, input_shape=(224, 224, 3)),
+            tf.keras.layers.Conv2D(16, 3, padding='same', activation='relu'),
+            tf.keras.layers.MaxPooling2D(),
+            tf.keras.layers.Conv2D(32, 3, padding='same', activation='relu'),
+            tf.keras.layers.MaxPooling2D(),
+            tf.keras.layers.Conv2D(64, 3, padding='same', activation='relu'),
+            tf.keras.layers.MaxPooling2D(),
             tf.keras.layers.Flatten(),
-            tf.keras.layers.Dense(128, activation=tf.nn.relu),
-            tf.keras.layers.Dense(15, activation=tf.nn.softmax)
-        ])
+            tf.keras.layers.Dense(128, activation='relu'),
+            tf.keras.layers.Dense(num_classes)
+            ])
 
         return model
     
     def compile_model(model):
-        model.compile(loss="sparse_categorical_crossentropy" ,optimizer="adam", metrics=["accuracy"])
+        model.compile(optimizer='adam',loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),metrics=['accuracy'])
 
         return model
 
-    def fit_model(model, training_set, test_set, training_labels, tensorboard_cb):
-        history = model.fit(training_set, training_labels, batch_size=128, epochs=15, validation_split=0.2, callbacks=[tensorboard_cb])
+    def fit_model(train_ds, valid_ds, tensorboard_cb, model):
+        history = model.fit(train_ds, validation_data=valid_ds,epochs=45, callbacks=[tensorboard_cb])
 
         return history
     def pickle_history(history):
@@ -40,8 +41,27 @@ class ModelBuilder:
             pickle.dump(history.history, file)
 
     def save_model(model):
-        timestr = time.strftime("%Y%m%d-%H%M%S")
-        model.save('models/model-%s',timestr)
+        dir = 'models/' + time.strftime("model_%Y%m%d-%H%M%S")
+        model.save(dir)
+
+    def load_model(modelPath):
+        model = tf.keras.models.load_model(modelPath)
+        return model
+    
+    def predict_image(image_path, model, class_names):
+        img = tf.keras.utils.load_img(
+        image_path, target_size=(224, 224)
+        )
+        img_array = tf.keras.utils.img_to_array(img)
+        img_array = tf.expand_dims(img_array, 0)
+
+        predictions = model.predict(img_array)
+        score = tf.nn.softmax(predictions[0])
+
+        print(
+            "This image most likely belongs to {} with a {:.2f} percent confidence."
+            .format(class_names[np.argmax(score)], 100 * np.max(score))
+        )
 
     def load_history():
         history = pickle.load(open('src/history.json', "rb"))

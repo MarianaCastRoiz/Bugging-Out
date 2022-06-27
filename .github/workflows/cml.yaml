@@ -30,7 +30,7 @@ jobs:
         run: |
 
           cml-tensorboard-dev --logdir model_logs --md --name "Go to tensorboard" >> report.md
-          cml-send-comment report.md
+
           python src/main.py --Train true
 
           cml publish dataset_split.png --md >> report.md
