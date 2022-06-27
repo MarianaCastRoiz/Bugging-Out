@@ -7,3 +7,5 @@ sklearn
 numpy
 keras
 tensorboard
+markdown
+PIL

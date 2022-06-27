@@ -17,15 +17,23 @@ jobs:
         run: |
           mkdir model_logs
           unzip Data-Test.zip
+
+      - name: Data Exploration
+        run: | 
+          pip install -r requirements.txt
+          python3 dataExploration.py
+
       - name: Train model
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TB_CREDENTIALS: ${{ secrets.TB_CREDENTIALS }}
         run: |
-          pip install -r requirements.txt
+
           cml-tensorboard-dev --logdir model_logs --md --name "Go to tensorboard" >> report.md
           cml-send-comment report.md
           python src/main.py --Train true
 
-          cml publish model-plot.png --md >> report.md
+          cml publish dataset_split.png --md >> report.md
+          cml publish model-plot.png  --md >> report.md
+          cml publish Spider_grid.png --md >> report.md
           cml send-comment report.md

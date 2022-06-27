@@ -2,6 +2,7 @@ import glob
 import cv2
 import matplotlib.pyplot as plt
 import os
+from numpy import histogram
 import pandas as pd
 import numpy as np
 import tensorflow as tf
@@ -54,7 +55,7 @@ def tensor_board_config():
     root_logdir = os.path.join(os.curdir, "model_logs")
     run_logdir = get_run_logdir(root_logdir)
 
-    tensorboard_cb = keras.callbacks.TensorBoard(run_logdir)
+    tensorboard_cb = keras.callbacks.TensorBoard(run_logdir,histogram_freq=1)
     return tensorboard_cb
 
 def get_run_logdir(root_logdir):
