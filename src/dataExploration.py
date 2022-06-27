@@ -1,5 +1,3 @@
-from cgi import test
-import markdown
 import os
 import cv2
 import pathlib

@@ -16,7 +16,7 @@ jobs:
       - name: Creating log directory and unzip data
         run: |
           mkdir model_logs
-          unzip Data-Test.zip
+          unzip Data.zip
 
       - name: Data Exploration
         run: | 

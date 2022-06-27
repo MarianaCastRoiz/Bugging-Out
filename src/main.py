@@ -64,9 +64,9 @@ def get_run_logdir(root_logdir):
 
 
 def create_train_test():
-    spiders = ["Black Widow", "Blue Tarantula", "Bold Jumper", "Brown Grass Spider", "Brown Recluse Spider",
-        "Deinopis Spider", "Golden Orb Weaver", "Hobo Spider", "Huntsman Spider", "Ladybird Mimic Spider",
-        "Peacock Spider", "Red Knee Tarantula", "Spiny-backed Orb-weaver", "White Kneed Tarantula", "Yellow Garden Spider"]
+    spiders = ["BlackWidow", "BlueTarantula", "BoldJumper", "BrownGrassSpider", "BrownRecluseSpider",
+        "DeinopisSpider", "GoldenOrbWeaver", "HoboSpider", "HuntsmanSpider", "LadybirdMimicSpider",
+        "PeacockSpider", "RedKneeTarantula", "Spiny-backedOrb-weaver", "WhiteKneedTarantula", "YellowGardenSpider"]
 
     spiders_label = {spiders: i for i, spiders in enumerate(spiders)}
 

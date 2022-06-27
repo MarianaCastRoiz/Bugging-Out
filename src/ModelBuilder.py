@@ -68,3 +68,4 @@ class ModelBuilder:
         plt.legend()
 
         plt.savefig('model-plot.png',format='png')
+        plt.close()
