@@ -32,7 +32,7 @@ class ModelBuilder:
         return model
 
     def fit_model(train_ds, valid_ds, tensorboard_cb, model):
-        history = model.fit(train_ds, validation_data=valid_ds,epochs=20, callbacks=[tensorboard_cb])
+        history = model.fit(train_ds, validation_data=valid_ds,epochs=15, callbacks=[tensorboard_cb])
 
         return history
     def pickle_history(history):
