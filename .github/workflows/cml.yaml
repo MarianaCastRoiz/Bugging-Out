@@ -21,7 +21,7 @@ jobs:
       - name: Data Exploration
         run: | 
           pip install -r requirements.txt
-          python3 dataExploration.py
+          python3 src/dataExploration.py
 
       - name: Train model
         env:
