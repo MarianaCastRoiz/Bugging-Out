@@ -78,17 +78,15 @@ def get_run_logdir(root_logdir):
 def prepare_data():
     train_ds = tf.keras.utils.image_dataset_from_directory(
     "Data/train",
-    validation_split=0.2,
-    subset="training",
     seed=123,
     image_size=(224, 224),
-    batch_size=2186)
+    batch_size=100)
 
     test_ds = tf.keras.utils.image_dataset_from_directory(
-    "Data/train",
+    "Data/test",
     seed=123,
     image_size=(224, 224),
-    batch_size=75)
+    batch_size=10)
 
     valid_ds = tf.keras.utils.image_dataset_from_directory(
     "Data/valid",
@@ -96,7 +94,7 @@ def prepare_data():
     subset="validation",
     seed=123,
     image_size=(224, 224),
-    batch_size=75)
+    batch_size=10)
 
     return train_ds,test_ds, valid_ds
 
