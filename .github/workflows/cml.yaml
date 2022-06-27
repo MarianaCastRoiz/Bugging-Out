@@ -1,0 +1,39 @@
+name: CML
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: iterative/setup-cml@v1
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Creating log directory and unzip data
+        run: |
+          mkdir model_logs
+          unzip Data.zip
+
+      - name: Data Exploration
+        run: | 
+          pip install -r requirements.txt
+          python3 src/dataExploration.py
+
+      - name: Train model
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TB_CREDENTIALS: ${{ secrets.TB_CREDENTIALS }}
+        run: |
+
+          cml-tensorboard-dev --logdir model_logs --md --name "Go to tensorboard" >> report.md
+
+          python src/main.py --Train true
+
+          cml publish dataset_split.png --md >> report.md
+          cml publish model-plot.png  --md >> report.md
+          cml publish Spider_grid.png --md >> report.md
+          cml send-comment report.md
